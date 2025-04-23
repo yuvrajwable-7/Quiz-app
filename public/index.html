@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMaster | Unleash Your Knowledge</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="full-screen-container">
+        <div id="particles-js"></div>
+        <div class="app-container">
+            <header class="app-header">
+                <h1><i class="fas fa-brain animate-icon"></i> QuizMaster</h1>
+                <p class="tagline">Unleash your knowledge, dominate the leaderboard!</p>
+            </header>
+
+            <main class="quiz-container">
+                <!-- Start Screen -->
+                <section id="start-screen" class="quiz-section active">
+                    <div class="welcome-card">
+                        <div class="welcome-icon">
+                            <i class="fas fa-question-circle animate-icon"></i>
+                        </div>
+                        <h2>Ready to Conquer the Quiz?</h2>
+                        <p>Test your skills with 10 thrilling questions!</p>
+                        <form id="username-form" class="username-form">
+                            <div class="input-group">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" id="username-input" placeholder="Enter your name" required>
+                            </div>
+                            <button type="submit" id="start-btn" class="btn btn-primary animate-btn">
+                                <i class="fas fa-play"></i> Start Quiz
+                            </button>
+                        </form>
+                    </div>
+                    <div class="leaderboard-preview">
+                        <h3><i class="fas fa-trophy animate-icon"></i> Hall of Fame</h3>
+                        <div class="preview-loading">
+                            <div class="loading-spinner"></div>
+                            Loading leaderboard...
+                        </div>
+                        <table id="preview-leaderboard" class="hide">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Name</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <button id="view-full-leaderboard" class="btn btn-secondary animate-btn leaderboard-btn">
+                            <i class="fas fa-chart-bar"></i> View Full Leaderboard
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Quiz Screen -->
+                <section id="question-screen" class="quiz-section">
+                    <div class="quiz-header">
+                        <div class="quiz-progress">
+                            <span id="progress">Question 1/10</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+                        <div class="quiz-timer" id="timer-container">
+                            <svg class="timer-circle" width="50" height="50">
+                                <circle class="timer-bg" cx="25" cy="25" r="22"></circle>
+                                <circle class="timer-progress" cx="25" cy="25" r="22"></circle>
+                            </svg>
+                            <span id="timer">30</span>s
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <div class="category-badge" id="category">General</div>
+                        <h2 id="question">Loading question...</h2>
+                    </div>
+
+                    <div id="answer-buttons" class="quiz-answers">
+                        <!-- Answers will be inserted here -->
+                    </div>
+
+                    <div class="quiz-footer">
+                        <button id="next-btn" class="btn btn-next hide animate-btn">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Results Screen -->
+                <section id="results-screen" class="quiz-section">
+                    <div class="results-card">
+                        <div class="results-icon">
+                            <div class="icon-circle" id="results-icon">
+                                <i class="fas fa-trophy animate-icon"></i>
+                            </div>
+                        </div>
+                        <h2>Quiz Conquered!</h2>
+                        <div class="score-display">
+                            <span class="score-label">Your Score:</span>
+                            <span class="score-value" id="score">0</span>
+                            <span class="score-total">/10</span>
+                        </div>
+
+                        <div id="save-score-section">
+                            <div class="username-display">
+                                <i class="fas fa-user"></i>
+                                <span id="results-username"></span>
+                            </div>
+                            <button id="save-score-btn" class="btn btn-save animate-btn">
+                                <i class="fas fa-save"></i> Save Score
+                            </button>
+                            <p id="save-message" class="save-message"></p>
+                        </div>
+
+                        <div class="results-actions">
+                            <button id="view-leaderboard" class="btn btn-secondary animate-btn">
+                                <i class="fas fa-chart-bar"></i> View Leaderboard
+                            </button>
+                            <button id="restart-quiz" class="btn btn-primary animate-btn">
+                                <i class="fas fa-redo"></i> Play Again
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Leaderboard Screen -->
+                <section id="leaderboard-screen" class="quiz-section">
+                    <div class="leaderboard-card">
+                        <h2><i class="fas fa-crown animate-icon"></i> Leaderboard</h2>
+
+                        <div class="leaderboard-controls">
+                            <div class="leaderboard-filter">
+                                <button class="filter-btn active animate-btn" data-filter="all">All Time</button>
+                                <button class="filter-btn animate-btn" data-filter="week">This Week</button>
+                                <button class="filter-btn animate-btn" data-filter="today">Today</button>
+                            </div>
+                        </div>
+
+                        <div class="leaderboard-table-container">
+                            <table id="leaderboard">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Player</th>
+                                        <th>Score</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Leaderboard data will be added here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <button id="back-to-quiz" class="btn btn-primary animate-btn">
+                            <i class="fas fa-arrow-left"></i> Back to Quiz
+                        </button>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="app-footer">
+                <p>© 2025 QuizMaster | Crafted with <i class="fas fa-heart animate-icon"></i> by Team Quadro</p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        // Initialize Particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 100, density: { enable: true, value_area: 800 } },
+                color: { value: ['#6366f1', '#93c5fd', '#22c55e'] },
+                shape: { type: 'circle' },
+                opacity: { value: 0.6, random: true },
+                size: { value: 4, random: true },
+                line_linked: { enable: false },
+                move: { enable: true, speed: 3, direction: 'none', random: true }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: true, mode: 'push' } },
+                modes: { grab: { distance: 150, line_linked: { opacity: 0.5 } }, push: { particles_nb: 5 } }
+            },
+            retina_detect: true
+        });
+    </script>
+</body>
+
+</html>
